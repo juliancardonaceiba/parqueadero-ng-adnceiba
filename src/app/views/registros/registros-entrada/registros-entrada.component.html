@@ -39,3 +39,15 @@
   </div>
   <!--/.row-->
 </div>
+
+<p-dialog [(visible)]="mostrarRecibo" [modal]="true" [showHeader]="false">
+  <div *ngIf="recibo!=null">
+    <h1 style="text-align: center;">Tiquete de ingreso</h1>
+    <h3 style="text-align: center;">{{recibo.vehiculo.placa}}</h3>
+    <h5 style="text-align: center;">Hora entrada:</h5>
+    <h5 style="text-align: center;">{{recibo.horaIngreso}}</h5>
+
+    <button type="button" class="btn btn-primary btn-space" (click)="cerrarRecibo()">Aceptar</button>
+
+  </div>
+</p-dialog>

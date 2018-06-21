@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
+import { RegistroService } from '../../../services/registro.service';
 
 @Component({
   selector: 'app-historico-registros',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistoricoRegistrosComponent implements OnInit {
 
-  constructor() { }
+  private registros: any[] = [];
+
+  constructor(private registroService: RegistroService) { }
 
   ngOnInit() {
+    this.consultarRegistros();
+  }
+
+  public consultarRegistros() {
+    this.registroService.consultarRegistrosHistoricos().subscribe(data => {
+      this.registros = data;
+    });
   }
 
 }
