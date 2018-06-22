@@ -5,11 +5,13 @@ import { HistoricoRegistrosComponent } from './historico-registros/historico-reg
 import { RegistrosActualesComponent } from './registros-actuales/registros-actuales.component';
 import { AdministracionRoutingModule } from './administracion-routing.module';
 import { ConfirmationService } from 'primeng/api';
+import {DialogModule} from 'primeng/dialog';
 import { RegistroService } from '../../services/registro.service';
 @NgModule({
   imports: [
     CommonModule,
     ConfirmDialogModule,
+    DialogModule,
     AdministracionRoutingModule
   ],
   declarations: [HistoricoRegistrosComponent, RegistrosActualesComponent],

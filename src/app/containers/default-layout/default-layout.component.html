@@ -1,16 +1,15 @@
-<app-header
-  [fixed]="true"
-  [navbarBrandFull]="{src: 'assets/img/brand/logo.svg', width: 89, height: 25, alt: 'CoreUI Logo'}"
-  [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
-  [sidebarToggler]="'lg'"
-  [asideMenuToggler]="false"
-  [mobileAsideMenuToggler]="false">
+<app-header [fixed]="true" [navbarBrandFull]="{src: 'assets/img/brand/logo.svg', width: 89, height: 25, alt: 'CoreUI Logo'}"
+  [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}" [sidebarToggler]="'lg'"
+  [asideMenuToggler]="false" [mobileAsideMenuToggler]="false">
   <ul class="nav navbar-nav d-md-down-none">
-    
+
   </ul>
   <ul class="nav navbar-nav ml-auto">
-    
+
   </ul>
+  <div>
+    <app-trm></app-trm>
+  </div>
 </app-header>
 <div class="app-body">
   <app-sidebar [fixed]="true" [display]="'lg'">
@@ -25,11 +24,15 @@
     </ol>
     <div class="container-fluid">
       <router-outlet></router-outlet>
-    </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.container-fluid -->
   </main>
-  
+
 </div>
 <app-footer>
-  <span><a href="https://www.ceiba.com.co">Ceiba Software House</a> &copy; 2018.</span>
-  <span class="ml-auto">Powered by <a href="https://coreui.io/angular">CoreUI for Angular</a></span>
+  <span>
+    <a href="https://www.ceiba.com.co">Ceiba Software House</a> &copy; 2018.</span>
+  <span class="ml-auto">Powered by
+    <a href="https://coreui.io/angular">CoreUI for Angular</a>
+  </span>
 </app-footer>

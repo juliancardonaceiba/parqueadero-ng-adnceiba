@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { catchError, tap } from 'rxjs/operators';
-import { of } from "rxjs/observable/of";
 import { RestConfig } from '../util/RestConfig';
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
@@ -34,5 +32,4 @@ export class RegistroService {
   public consultarRegistrosHistoricos(): Observable<any> {
     return this.http.get<any>(RegistroService.REGISTROS_HISTORICOS_ENDPOINT, httpOptions);
   }
-
 }

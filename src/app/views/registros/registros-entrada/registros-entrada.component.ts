@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { VehiculoService } from '../../../services/vehiculo.service';
 import { RegistroService } from '../../../services/registro.service';
+import { messagesDs } from '../../../messages'
 @Component({
   selector: 'app-registros-entrada',
   templateUrl: './registros-entrada.component.html',
@@ -13,21 +15,36 @@ export class RegistrosEntradaComponent implements OnInit {
 
   private msgs: any[] = [];
 
-  private dto: any = {};
+  private tipoVehiculo = null;
 
   private recibo: any = null;
 
+  @ViewChild('form')
+  private form: NgForm;
+
+
   constructor(private messageService: MessageService, private vehiculoService: VehiculoService, private registroService: RegistroService) { }
 
-  ngOnInit() {
+  ngOnChanges() {
+    this.limpiar();
+    console.log("dd");
   }
 
-  public cancelar() {
-    this.dto = {};
+  ngOnInit() {
+    this.limpiar();
+  }
+
+  public limpiar() {
+    this.form.reset();
+  }
+
+  public submit(form) {
+    this.form = form;
+    this.guardar();
   }
 
   public guardar() {
-    if (this.dto.id != null) {
+    if (this.form.value.id != null) {
       this.crearRegistro();
     } else {
       this.crearVehiculo();
@@ -35,10 +52,12 @@ export class RegistrosEntradaComponent implements OnInit {
   }
 
   public crearRegistro() {
-    this.registroService.registrarEntrada(this.dto.placa).subscribe(data => {
-      this.dto = {};
-      this.recibo=data;
+    this.registroService.registrarEntrada(this.form.value.placa).subscribe(data => {
+      this.limpiar();
+      this.recibo = data;
       this.imprimirRecibo();
+    }, excepcion => {
+      this.procesarExcepcion(excepcion);
     });
   }
 
@@ -51,17 +70,28 @@ export class RegistrosEntradaComponent implements OnInit {
   }
 
   public crearVehiculo() {
-    this.vehiculoService.crearVehiculo(this.dto).subscribe(data => {
+    this.vehiculoService.crearVehiculo(this.form.value).subscribe(data => {
       this.crearRegistro();
+    }, excepcion => {
+      this.procesarExcepcion(excepcion);
     });
   }
 
   public consultarVehiculo() {
-    this.vehiculoService.getVehiculo(this.dto.placa).subscribe(data => {
+    this.vehiculoService.getVehiculo(this.form.value.placa).subscribe(data => {
       if (data != null) {
-        this.dto = data;
+        this.form.setValue(data);
       }
     });
+  }
+
+  private procesarExcepcion(excepcion) {
+    if (excepcion.error != null && excepcion.error.message != null) {
+      this.messageService.add({ severity: 'error', summary: 'ERROR', detail: messagesDs[excepcion.error.message] });
+      return;
+    }else{
+      this.messageService.add({ severity: 'error', summary: 'ERROR', detail: messagesDs['error'] });
+    }
   }
 
 

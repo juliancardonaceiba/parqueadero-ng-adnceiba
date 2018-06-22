@@ -8,7 +8,6 @@ import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
 import {DialogModule} from 'primeng/dialog';
 import { RegistrosEntradaComponent } from './registros-entrada/registros-entrada.component';
-import { RegistrosSalidaComponent } from './registros-salida/registros-salida.component';
 import { RegistrosRoutingModule } from './registros-routing.module';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { RegistroService } from '../../services/registro.service';
@@ -24,7 +23,7 @@ import { RegistroService } from '../../services/registro.service';
     DialogModule,
     RegistrosRoutingModule
   ],
-  declarations: [RegistrosEntradaComponent, RegistrosSalidaComponent],
+  declarations: [RegistrosEntradaComponent],
   providers: [MessageService, VehiculoService, RegistroService]
 })
 export class RegistrosModule { }

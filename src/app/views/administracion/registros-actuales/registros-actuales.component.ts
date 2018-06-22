@@ -9,6 +9,10 @@ import { RegistroService } from '../../../services/registro.service';
 })
 export class RegistrosActualesComponent implements OnInit {
 
+  private mostrarRecibo: boolean = false;
+
+  private registroSalida: any = null;
+
   private registros: any[] = [];
 
   constructor(private registroService: RegistroService, private confirmationService: ConfirmationService) { }
@@ -25,17 +29,27 @@ export class RegistrosActualesComponent implements OnInit {
 
   public registrarSalida(placa: string) {
     this.registroService.registrarSalida(placa).subscribe(data => {
+      this.registroSalida = data;
+      this.imprimirRecibo();
       this.consultarRegistros();
     })
   }
 
   public confirmarSalida(placa: string) {
     this.confirmationService.confirm({
-      message: '¿Desea registrar la salida del vehiculo con placa '+placa+' y realizar el cobro?',
+      message: '¿Desea registrar la salida del vehiculo con placa ' + placa + ' y realizar el cobro?',
       accept: () => {
         this.registrarSalida(placa);
       }
     });
+  }
+
+  public imprimirRecibo() {
+    this.mostrarRecibo = true;
+  }
+
+  public cerrarRecibo() {
+    this.mostrarRecibo = false;
   }
 
 }
