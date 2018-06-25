@@ -33,10 +33,10 @@
     </div>
   </div>
 </div>
-<p-confirmDialog header="Confirmación" [responsive]="true" acceptLabel="Si" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
+<p-confirmDialog header="Confirmación" [responsive]="true" acceptLabel="Si" icon="pi pi-exclamation-triangle" width="425" acceptButtonStyleClass="btn-si"></p-confirmDialog>
 
 <p-dialog [responsive]="true" [(visible)]="mostrarRecibo" [modal]="true" [showHeader]="false">
-  <div *ngIf="registroSalida!=null">
+  <div  id="panel-recibo-salida" *ngIf="registroSalida!=null">
     <h1 style="text-align: center;">Tiquete de Salida</h1>
     <h3 style="text-align: center;">{{registroSalida.vehiculo.placa}}</h3>
     <h5 style="text-align: center;">Hora Sntrada:</h5>

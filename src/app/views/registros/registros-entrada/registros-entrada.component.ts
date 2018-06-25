@@ -27,7 +27,6 @@ export class RegistrosEntradaComponent implements OnInit {
 
   ngOnChanges() {
     this.limpiar();
-    console.log("dd");
   }
 
   ngOnInit() {
@@ -44,17 +43,19 @@ export class RegistrosEntradaComponent implements OnInit {
   }
 
   public guardar() {
-    if (this.form.value.id != null) {
-      this.crearRegistro();
-    } else {
-      this.crearVehiculo();
-    }
+    this.vehiculoService.getVehiculo(this.form.value.placa).subscribe(data => {
+      if (data != null) {
+        this.crearRegistro();
+      } else {
+        this.crearVehiculo();
+      }
+    });
   }
 
   public crearRegistro() {
     this.registroService.registrarEntrada(this.form.value.placa).subscribe(data => {
-      this.limpiar();
       this.recibo = data;
+      this.limpiar();
       this.imprimirRecibo();
     }, excepcion => {
       this.procesarExcepcion(excepcion);
@@ -80,7 +81,12 @@ export class RegistrosEntradaComponent implements OnInit {
   public consultarVehiculo() {
     this.vehiculoService.getVehiculo(this.form.value.placa).subscribe(data => {
       if (data != null) {
-        this.form.setValue(data);
+        let vehiculo = {
+          placa: data.placa,
+          tipoVehiculo: data.tipoVehiculo,
+          cilindraje: data.cilindraje != null ? data.cilindraje : null
+        };
+        this.form.setValue(vehiculo);
       }
     });
   }
@@ -89,7 +95,7 @@ export class RegistrosEntradaComponent implements OnInit {
     if (excepcion.error != null && excepcion.error.message != null) {
       this.messageService.add({ severity: 'error', summary: 'ERROR', detail: messagesDs[excepcion.error.message] });
       return;
-    }else{
+    } else {
       this.messageService.add({ severity: 'error', summary: 'ERROR', detail: messagesDs['error'] });
     }
   }
